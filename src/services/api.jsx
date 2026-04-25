@@ -1,5 +1,5 @@
 // src/services/api.js
-const BASE_URL = "http://localhost:5000/api";
+const BASE_URL = "https://onlinehattid-production.up.railway.app/api";
 
 export const apiGet = async (url) => {
     const token = localStorage.getItem("token");

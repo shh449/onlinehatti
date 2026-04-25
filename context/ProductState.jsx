@@ -22,7 +22,7 @@ export default function ProductState(props) {
             setLoadingProducts(true);
 
             const response = await fetch(
-                `http://localhost:5000/api/product/getallproducts?page=${pageNumber}&limit=12`,
+                `https://onlinehattid-production.up.railway.app/api/product/getallproducts?page=${pageNumber}&limit=12`,
                 {
                     method: "GET",
                     headers: { "Content-Type": "application/json" },
@@ -76,7 +76,7 @@ export default function ProductState(props) {
     //////////////////////////////////////////
     const addToCart = async (id, quantity = 1, selectedImage = "", selectedOptions = {}) => {
         try {
-            const response = await fetch("http://localhost:5000/api/cart/addcart", {
+            const response = await fetch("https://onlinehattid-production.up.railway.app/api/cart/addcart", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -99,7 +99,7 @@ export default function ProductState(props) {
 
     const getCart = async () => {
         try {
-            const response = await fetch("http://localhost:5000/api/cart/getcart", {
+            const response = await fetch("https://onlinehattid-production.up.railway.app/api/cart/getcart", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -115,7 +115,7 @@ export default function ProductState(props) {
 
     const increaseValue = async (id) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/cart/increasevalue/${id}`, {
+            const response = await fetch(`https://onlinehattid-production.up.railway.app/api/cart/increasevalue/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -131,7 +131,7 @@ export default function ProductState(props) {
 
     const decreaseValue = async (id) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/cart/decreasevalue/${id}`, {
+            const response = await fetch(`https://onlinehattid-production.up.railway.app/api/cart/decreasevalue/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -147,7 +147,7 @@ export default function ProductState(props) {
 
     const deleteCart = async (id) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/cart/removecart/${id}`, {
+            const response = await fetch(`https://onlinehattid-production.up.railway.app/api/cart/removecart/${id}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
