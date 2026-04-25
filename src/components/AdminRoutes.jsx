@@ -17,7 +17,7 @@ export default function AdminRoutes({ children }) {
 
             // Optional: verify token with backend
             try {
-                const res = await fetch("http://localhost:5000/api/auth/fetchuser", {
+                const res = await fetch("https://onlinehattid-production.up.railway.app/api/auth/fetchuser", {
                     method: "GET",
                     headers: {
                         "auth-token": token

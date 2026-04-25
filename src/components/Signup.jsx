@@ -9,7 +9,7 @@ export default function Signup() {
     const handleclick = async (e) => {
         e.preventDefault()
         setErrors({});
-        const response = await fetch("http://localhost:5000/api/auth/signup", {
+        const response = await fetch("https://onlinehattid-production.up.railway.app/api/auth/signup", {
             method: "POST",
             headers: {
                 "Content-type": "application/json",

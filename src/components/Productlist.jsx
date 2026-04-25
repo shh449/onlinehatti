@@ -51,7 +51,7 @@ export default function Productlist() {
     const fetchProducts = async (pageNumber = 1) => {
         try {
             const res = await fetch(
-                `http://localhost:5000/api/product/getallproducts?page=${pageNumber}&limit=12`
+                `https://onlinehattid-production.up.railway.app/api/product/getallproducts?page=${pageNumber}&limit=12`
             );
 
             const data = await res.json();
@@ -166,7 +166,7 @@ export default function Productlist() {
 
         try {
             const res = await fetch(
-                "http://localhost:5000/api/order/placeorder",
+                "https://onlinehattid-production.up.railway.app/api/order/placeorder",
                 {
                     method: "POST",
                     headers: {
@@ -196,7 +196,7 @@ export default function Productlist() {
             // JAZZCASH
             else if (paymentMethod === "JazzCash") {
                 const jcRes = await fetch(
-                    "http://localhost:5000/api/payment/jazzcash/initiate",
+                    "https://onlinehattid-production.up.railway.app/api/payment/jazzcash/initiate",
                     {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
@@ -216,7 +216,7 @@ export default function Productlist() {
             // EASYPAISA
             else if (paymentMethod === "Easypaisa") {
                 const epRes = await fetch(
-                    "http://localhost:5000/api/payment/easypaisa/initiate",
+                    "https://onlinehattid-production.up.railway.app/api/payment/easypaisa/initiate",
                     {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },

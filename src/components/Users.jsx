@@ -5,7 +5,7 @@ export default function Users() {
 
     useEffect(() => {
         const fetchUsers = async () => {
-            const res = await fetch('http://localhost:5000/api/admin/users', {
+            const res = await fetch('https://onlinehattid-production.up.railway.app/api/admin/users', {
                 headers: { 'auth-token': localStorage.getItem('token') },
             });
             const data = await res.json();

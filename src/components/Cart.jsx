@@ -126,7 +126,7 @@ export default function CartPage() {
         };
 
         try {
-            const res = await fetch("http://localhost:5000/api/order/placeorder", {
+            const res = await fetch("https://onlinehattid-production.up.railway.app/api/order/placeorder", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

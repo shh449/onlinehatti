@@ -31,7 +31,7 @@ export default function ProductDetails() {
     // Fetch product details
     const fetchProduct = async () => {
         try {
-            const res = await fetch(`http://localhost:5000/api/product/fetchoneproduct/${id}`);
+            const res = await fetch(`https://onlinehattid-production.up.railway.app/api/product/fetchoneproduct/${id}`);
             const data = await res.json();
             setProduct(data);
             setSelectedImage(data.images?.[0] || data.imageSrc);
@@ -48,7 +48,7 @@ export default function ProductDetails() {
     const submitReview = async () => {
         if (!review.rating || !review.comment) return alert("Please provide rating and comment");
         try {
-            await fetch(`http://localhost:5000/api/product/review/${id}`, {
+            await fetch(`https://onlinehattid-production.up.railway.app/api/product/review/${id}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json", "auth-token": localStorage.getItem("token") },
                 body: JSON.stringify(review),
@@ -100,7 +100,7 @@ export default function ProductDetails() {
         };
 
         try {
-            const res = await fetch("http://localhost:5000/api/order/placeorder", {
+            const res = await fetch("https://onlinehattid-production.up.railway.app/api/order/placeorder", {
                 method: "POST",
                 headers: { "Content-Type": "application/json", "auth-token": localStorage.getItem("token") },
                 body: JSON.stringify(payload),

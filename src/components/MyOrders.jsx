@@ -14,7 +14,7 @@ export default function MyOrders() {
 
     const fetchOrders = async () => {
         try {
-            const res = await fetch("http://localhost:5000/api/order/myorders", {
+            const res = await fetch("https://onlinehattid-production.up.railway.app/api/order/myorders", {
                 headers: { "auth-token": localStorage.getItem("token") },
             });
             const data = await res.json();
@@ -26,7 +26,7 @@ export default function MyOrders() {
 
     const cancelOrder = async (id) => {
         try {
-            const res = await fetch(`http://localhost:5000/api/order/cancel/${id}`, {
+            const res = await fetch(`https://onlinehattid-production.up.railway.app/api/order/cancel/${id}`, {
                 method: "PUT",
                 headers: { "auth-token": localStorage.getItem("token") },
             });
@@ -41,7 +41,7 @@ export default function MyOrders() {
 
     const deleteOrder = async (id) => {
         try {
-            const res = await fetch(`http://localhost:5000/api/order/delete/${id}`, {
+            const res = await fetch(`https://onlinehattid-production.up.railway.app/api/order/delete/${id}`, {
                 method: "DELETE",
                 headers: { "auth-token": localStorage.getItem("token") },
             });

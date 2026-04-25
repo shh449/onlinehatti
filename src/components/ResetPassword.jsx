@@ -19,7 +19,7 @@ export default function ResetPassword() {
         setMessage("");
 
         try {
-            const response = await fetch(`http://localhost:5000/api/auth/resetpassword/${token}`, {
+            const response = await fetch(`https://onlinehattid-production.up.railway.app/api/auth/resetpassword/${token}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ password })
