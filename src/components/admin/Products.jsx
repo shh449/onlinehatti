@@ -101,7 +101,7 @@ export default function Products() {
                 const formData = new FormData();
                 formData.append("image", file);
 
-                const res = await fetch(`${API}/api/upload/image`, {
+                const res = await fetch(`${API}api/upload/image`, {
                     method: "POST",
                     headers: { "auth-token": token },
                     body: formData
