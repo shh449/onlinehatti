@@ -8,6 +8,7 @@ export default function Navbar({ searchTerm, setSearchTerm, onCategorySelect, ac
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [loadingBarWidth, setLoadingBarWidth] = useState(0);
     const [loading, setLoading] = useState(false);
+    const [categoryOpen, setCategoryOpen] = useState(false);
 
     const categories = ["all", "clothes", "shoes", "watches", "fashion bags"];
 
@@ -76,11 +77,33 @@ export default function Navbar({ searchTerm, setSearchTerm, onCategorySelect, ac
                     {isProductDetailsPage || isCartPage || isOrdersPage ? (
                         <button onClick={handleHomeClick} className={getActiveClass(isHomePage)}>Home</button>
                     ) : (
-                        categories.map(cat => (
-                            <button key={cat} onClick={() => { onCategorySelect(cat); triggerLoadingBar(); }} className={getActiveClass(activeCategory === cat) + " capitalize"}>
-                                {cat}
+                        <div className="relative">
+                            <button
+                                onClick={() => setCategoryOpen(!categoryOpen)}
+                                className="text-white hover:text-[#eb6a00] font-medium"
+                            >
+                                Categories ▼
                             </button>
-                        ))
+
+                            {categoryOpen && (
+                                <div className="absolute top-10 left-0 bg-[#124b68] backdrop-blur-lg shadow-lg rounded-lg w-48 flex flex-col z-50">
+                                    {categories.map((cat) => (
+                                        <button
+                                            key={cat}
+                                            onClick={() => {
+                                                onCategorySelect(cat);
+                                                triggerLoadingBar();
+                                                setCategoryOpen(false);
+                                            }}
+                                            className={`text-left px-4 py-2 hover:bg-[#eb6a00]/20 capitalize ${activeCategory === cat ? "text-[#eb6a00]" : "text-white"
+                                                }`}
+                                        >
+                                            {cat}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                     )}
 
                     {/* Search */}
@@ -115,11 +138,24 @@ export default function Navbar({ searchTerm, setSearchTerm, onCategorySelect, ac
                     {isProductDetailsPage || isCartPage || isOrdersPage ? (
                         <button onClick={handleHomeClick} className={getActiveClass(isHomePage) + " text-left"}>Home</button>
                     ) : (
-                        categories.map(cat => (
-                            <button key={cat} onClick={() => { onCategorySelect(cat); setMobileMenuOpen(false); triggerLoadingBar(); }} className={getActiveClass(activeCategory === cat) + " capitalize text-left"}>
-                                {cat}
-                            </button>
-                        ))
+                        <div className="border-t border-white/20 pt-2">
+                            <p className="text-white font-semibold mb-2">Categories</p>
+
+                            {categories.map((cat) => (
+                                <button
+                                    key={cat}
+                                    onClick={() => {
+                                        onCategorySelect(cat);
+                                        setMobileMenuOpen(false);
+                                        triggerLoadingBar();
+                                    }}
+                                    className={`block text-left w-full py-1 capitalize ${activeCategory === cat ? "text-[#eb6a00]" : "text-white"
+                                        }`}
+                                >
+                                    {cat}
+                                </button>
+                            ))}
+                        </div>
                     )}
 
                     {/* Search */}
