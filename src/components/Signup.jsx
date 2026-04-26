@@ -41,13 +41,34 @@ export default function Signup() {
 
                 let fieldErrors = {};
 
-                if (Array.isArray(json.error)) {
-                    json.error.forEach(err => {
-                        fieldErrors[err.path] = err.msg;
+                // ✅ FIXED: handle express-validator errors
+                if (Array.isArray(json.errors)) {
+                    json.errors.forEach(err => {
+                        if (err.path) {
+                            fieldErrors[err.path] = err.msg;
+                        }
                     });
-                } else if (typeof json.error === "string") {
+                }
+
+                // ✅ FIXED: duplicate user or custom backend message
+                else if (json.message) {
+                    fieldErrors.general = json.message;
+                }
+
+                // fallback old structure support
+                else if (Array.isArray(json.error)) {
+                    json.error.forEach(err => {
+                        if (err.path) {
+                            fieldErrors[err.path] = err.msg;
+                        }
+                    });
+                }
+
+                else if (typeof json.error === "string") {
                     fieldErrors.general = json.error;
-                } else {
+                }
+
+                else {
                     fieldErrors.general = "Something went wrong";
                 }
 
