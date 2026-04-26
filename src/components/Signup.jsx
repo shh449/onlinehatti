@@ -71,8 +71,10 @@ export default function Signup() {
                 else {
                     fieldErrors.general = "Something went wrong";
                 }
+                setTimeout(() => {
+                    setErrors(fieldErrors);
 
-                setErrors(fieldErrors);
+                }, 2000);
             }
 
         } catch (error) {
