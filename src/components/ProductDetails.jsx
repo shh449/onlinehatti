@@ -278,7 +278,7 @@ export default function ProductDetails() {
                         </div>
 
                         {/* Address */}
-                        {["address", "city", "postalcode", "country", "contact No"].map(f => (
+                        {["address", "city", "postalcode", "country", "contact "].map(f => (
                             <input key={f} placeholder={f.charAt(0).toUpperCase() + f.slice(1)} value={shippingAddress[f]} onChange={e => setShippingAddress({ ...shippingAddress, [f]: e.target.value })}
                                 className="w-full p-2 rounded border text-white bg-black/40 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-[#eb6a00]" />
                         ))}

@@ -269,7 +269,7 @@ export default function CartPage() {
                     <hr className="border-gray-400 my-2" />
                     <div className="flex justify-between font-bold text-white text-lg">
                         <span>Total:</span>
-                        <span>${totalAmount}</span>
+                        <span>{totalAmount}Rs</span>
                     </div>
                     <Button onClick={() => setShowModal(true)} className="!bg-[#6b4f2c] hover:!bg-[#583e24] !w-full py-3 rounded text-lg font-semibold shadow-lg mt-2">Checkout</Button>
                 </div>
@@ -296,7 +296,7 @@ export default function CartPage() {
                 }}>
                     <Typography variant="h6" className="text-center font-bold text-white mb-2">Shipping & Payment</Typography>
 
-                    {["address", "city", "postalcode", "country", "contact No"].map((f) => (
+                    {["address", "city", "postalcode", "country", "contact"].map((f) => (
                         <input
                             key={f}
                             name={f}
