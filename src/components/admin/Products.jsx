@@ -301,11 +301,11 @@ export default function Products() {
                         <div className="flex justify-between mt-2">
                             {p.discountedPrice ? (
                                 <div className="flex flex-col">
-                                    <span className="line-through text-gray-300">${p.price}</span>
-                                    <span className="font-bold text-lg text-yellow-400">${p.discountedPrice}</span>
+                                    <span className="line-through text-gray-300">{p.price}Rs</span>
+                                    <span className="font-bold text-lg text-yellow-400">{p.discountedPrice}Rs</span>
                                 </div>
                             ) : (
-                                <span className="font-bold">${p.price}</span>
+                                <span className="font-bold">{p.price}Rs</span>
                             )}
                             <span>Stock: {p.countInStock}</span>
                         </div>

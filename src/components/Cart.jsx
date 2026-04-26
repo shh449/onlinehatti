@@ -218,7 +218,7 @@ export default function CartPage() {
 
                                     <div className="flex justify-between mt-2 font-semibold items-center">
                                         <span className="text-lg font-bold">
-                                            ${itemPrice}
+                                            {itemPrice}Rs
                                             {itemPrice !== (item.product?.price || 0) && (
                                                 <span className="line-through text-sm text-gray-300 ml-1">${item.product?.price}</span>
                                             )}

@@ -38,7 +38,7 @@ export default function ProductDetails() {
         } catch (err) {
             console.error(err);
         } finally {
-            setLoading(false);
+            setLoading(false); 9
         }
     };
 
@@ -183,10 +183,10 @@ export default function ProductDetails() {
                         <p className="text-gray-200 mt-2">{product.description}</p>
                         {discountedPrice
                             ? <div className="flex gap-2 mt-3 items-center">
-                                <span className="line-through text-gray-300 text-xl">${price}</span>
-                                <span className="text-xl font-bold text-yellow-400">${discountedPrice}</span>
+                                <span className="line-through text-gray-300 text-xl">{price}Rs</span>
+                                <span className="text-xl font-bold text-yellow-400">Rs{discountedPrice}</span>
                             </div>
-                            : <p className="mt-3 text-xl font-semibold">${price}</p>
+                            : <p className="mt-3 text-xl font-semibold">{price}Rs</p>
                         }
                         {product.brand && <p>Brand: {product.brand}</p>}
                         <p>Category: {product.category}</p>

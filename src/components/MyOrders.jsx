@@ -172,7 +172,7 @@ export default function MyOrders() {
                                                 </span>
                                             )}
                                             <span>
-                                                {item.product ? `$${item.product.price * item.quantity}` : "-"}
+                                                {item.product ? `${item.product.price * item.quantity}Rs` : "-"}
                                             </span>
                                         </div>
                                     ))
@@ -183,10 +183,10 @@ export default function MyOrders() {
                                 <div className="flex justify-between font-bold">
                                     <span>Total</span>
                                     <span>
-                                        ${selectedOrder.orderitems.reduce((acc, item) => {
+                                        {selectedOrder.orderitems.reduce((acc, item) => {
                                             if (!item.product) return acc;
                                             return acc + item.product.price * item.quantity;
-                                        }, 0)}
+                                        }, 0)}Rs
                                     </span>
                                 </div>
 

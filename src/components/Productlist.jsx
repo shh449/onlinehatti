@@ -319,25 +319,21 @@ export default function Productlist() {
                                 {item.discountedPrice ? (
                                     <p>
                                         <span className="line-through mr-2">
-                                            ${item.price}
+                                            {item.price}Rs
                                         </span>
                                         <span className="font-bold">
-                                            ${item.discountedPrice}
+                                            {item.discountedPrice}Rs
                                         </span>
                                     </p>
                                 ) : (
-                                    <p>${item.price}</p>
+                                    <p>{item.price}Rs</p>
                                 )}
 
                                 <p className="mb-2">
                                     Stock: {item.countInStock}
                                 </p>
 
-                                {item.deliveryCharge && (
-                                    <p className="mb-2 text-sm">
-                                        Delivery: ${item.deliveryCharge}
-                                    </p>
-                                )}
+
 
                                 <Button
                                     fullWidth
@@ -431,17 +427,17 @@ export default function Productlist() {
                                         {selectedProduct.discountedPrice ? (
                                             <>
                                                 <span className="line-through mr-1">
-                                                    ${selectedProduct.price}
+                                                    {selectedProduct.price}Rs
                                                 </span>
                                                 <span className="font-bold">
-                                                    $
+
                                                     {
                                                         selectedProduct.discountedPrice
-                                                    }
+                                                    }Rs
                                                 </span>
                                             </>
                                         ) : (
-                                            `$${selectedProduct.price}`
+                                            `${selectedProduct.price}Rs`
                                         )}
                                     </span>
                                 </div>
@@ -500,28 +496,22 @@ export default function Productlist() {
                                 <div className="flex justify-between mb-1">
                                     <span>Subtotal</span>
                                     <span>
-                                        $
+
                                         {calculatePrice(selectedProduct) *
-                                            quantity}
+                                            quantity}Rs
                                     </span>
                                 </div>
 
-                                <div className="flex justify-between mb-3">
-                                    <span>Delivery</span>
-                                    <span>
-                                        $
-                                        {selectedProduct.deliveryCharge || 5}
-                                    </span>
-                                </div>
+
 
                                 <div className="flex justify-between font-bold mb-4">
                                     <span>Total</span>
                                     <span>
-                                        $
+
                                         {calculateTotal(
                                             selectedProduct,
                                             quantity
-                                        )}
+                                        )}Rs
                                     </span>
                                 </div>
                             </>

@@ -71,9 +71,9 @@ export default function Signup() {
                 else {
                     fieldErrors.general = "Something went wrong";
                 }
+                setErrors(fieldErrors);
                 setTimeout(() => {
-                    setErrors(fieldErrors);
-
+                    setErrors({})
                 }, 2000);
             }
 

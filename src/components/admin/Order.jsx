@@ -167,7 +167,7 @@ export default function Orders() {
                     <div key={order._id} className="bg-gray-800 p-4 rounded-lg shadow text-white">
                         <h2 className="font-bold mb-2">Order ID: {order._id}</h2>
                         <p>User: {order.user?.name} ({order.user?.email})</p>
-                        <p>Total: ${order.totalPrice}</p>
+                        <p>Total: {order.totalPrice} Rs</p>
 
                         {/* PAYMENT INFO */}
                         <p className="mt-1">
@@ -218,7 +218,7 @@ export default function Orders() {
                                         </p>
                                     </div>
                                     <div className="font-bold">
-                                        ${item.quantity * (item.product?.price || 0)}
+                                        {item.quantity * (item.product?.price || 0)}Rs
                                     </div>
                                 </div>
                             ))}
@@ -290,7 +290,7 @@ export default function Orders() {
                                 <strong>User:</strong> {selectedOrder.user?.name} ({selectedOrder.user?.email})
                             </Typography>
                             <Typography className="text-gray-200 mb-2">
-                                <strong>Total Price:</strong> ${selectedOrder.totalPrice}
+                                <strong>Total Price:</strong> {selectedOrder.totalPrice}Rs
                             </Typography>
                             <Typography className="text-gray-200 mb-2">
                                 <strong>Status:</strong> {selectedOrder.orderStatus}
@@ -333,7 +333,7 @@ export default function Orders() {
                                             <div className="flex items-center gap-2"><span className="text-sm">Color:</span>{item.selectedOptions?.color ? (<div className="w-4 h-4 rounded-full border" style={{ backgroundColor: item.selectedOptions.color }}></div>) : (<span className="text-sm">Default</span>)}</div><p className="text-sm">Size: {item.selectedOptions?.size || "Default"}</p>
                                         </div>
                                         <div className="bg-[#eb6a00] px-2 py-1 rounded text-white font-bold">
-                                            ${item.quantity * (item.product?.price || 0)}
+                                            {item.quantity * (item.product?.price || 0)}Rs
                                         </div>
                                     </div>
                                 ))}
