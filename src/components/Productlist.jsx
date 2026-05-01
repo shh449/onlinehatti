@@ -280,7 +280,7 @@ export default function Productlist() {
                 onCategorySelect={setCategory}
             />
 
-            <div className="pt-20 sm:pt-24 min-h-screen bg-gradient-to-br from-[#124b68] to-[#eb6a00] px-3 sm:px-6 lg:px-12">
+            <div className="pt-24 sm:pt-28 min-h-screen bg-gradient-to-br from-[#124b68] to-[#eb6a00] px-3 sm:px-6 lg:px-12">
                 {notification.message && (
                     <div
                         className={`fixed top-4 right-4 px-4 py-2 rounded text-white z-50 ${notification.type === "success"
@@ -292,9 +292,13 @@ export default function Productlist() {
                     </div>
                 )}
 
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-orange-200 text-center">
-                    Just for you
-                </h2>
+                <div className="text-center mb-6 sm:mb-10">
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-orange-200 to-white tracking-tight">
+                        Just for you
+                    </h2>
+
+                    <div className="w-24 h-1 bg-gradient-to-r from-orange-400 to-white mx-auto mt-3 rounded-full"></div>
+                </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-3 sm:gap-4 lg:gap-6">
                     {filteredProducts.map((item, index) => {
                         const productContent = (
