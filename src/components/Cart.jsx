@@ -169,7 +169,7 @@ export default function CartPage() {
             <div className="pt-28 px-4 sm:px-6 lg:px-12 flex flex-col lg:flex-row gap-6">
 
                 {/* Cart Items */}
-                <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-3 sm:gap-4 lg:gap-6">
                     {validCartItems.length === 0 ? (
                         <Typography className="text-white text-center text-lg">Your cart is empty</Typography>
                     ) : (

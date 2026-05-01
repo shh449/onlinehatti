@@ -292,8 +292,10 @@ export default function Productlist() {
                     </div>
                 )}
 
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-orange-200 text-center">
+                    Just for you
+                </h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-3 sm:gap-4 lg:gap-6">
-                    <h2>Just for you</h2>
                     {filteredProducts.map((item, index) => {
                         const productContent = (
                             <div
