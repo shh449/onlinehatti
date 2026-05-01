@@ -228,7 +228,12 @@ export default function CartPage() {
                                     <div className="flex justify-between mt-2 gap-2">
                                         <Button onClick={() => updateQuantity(item.product._id, -1)} className="!bg-[#eb6a00] !text-white !px-2 !py-2 !rounded-lg !text-xl hover:!bg-[#d15a00]">-</Button>
                                         <Button onClick={() => updateQuantity(item.product._id, 1)} className="!bg-[#eb6a00] !text-white !px-2 !py-2 !rounded-lg !text-xl hover:!bg-[#d15a00]">+</Button>
-                                        <Button onClick={() => removeItem(item.product._id)} className="!bg-[#eb6a00] !text-white !px-2 !py-2 !rounded-lg !text-xl hover:!bg-[#d15a00]">Remove</Button>
+                                        <Button
+                                            onClick={() => removeItem(item.product._id)}
+                                            className="!bg-red-500 hover:!bg-red-600 !text-white !px-3 sm:!px-4 !py-2 !rounded-lg !text-sm sm:!text-base whitespace-nowrap"
+                                        >
+                                            Remove
+                                        </Button>
                                     </div>
                                 </div>
                             );
@@ -252,16 +257,16 @@ export default function CartPage() {
                                     <div className="flex flex-col">
                                         <span>{item.product?.name}</span>
                                         <span className="text-sm text-gray-200">
-                                            *{itemPrice}Rs
+                                            {itemPrice}Rs
                                             {itemPrice !== (item.product?.price || 0) && (
-                                                <span className="line-through text-xs text-gray-400 ml-1">${item.product.price}</span>
+                                                <span className="line-through text-xs text-gray-400 ml-1">{item.product.price}Rs</span>
                                             )}
                                         </span>
                                         {item.selectedOptions?.color && <span className="text-sm text-gray-200">Color: {item.selectedOptions.color}</span>}
                                         {item.selectedOptions?.size && <span className="text-sm text-gray-200">Size: {item.selectedOptions.size}</span>}
                                     </div>
                                 </div>
-                                <span className="text-lg font-bold">{item.quantity}</span>
+                                <span className="text-lg font-bold">{item.quantity}</span>*
                                 <span className="text-lg font-bold">{itemPrice * item.quantity}Rs</span>
                             </div>
                         );
