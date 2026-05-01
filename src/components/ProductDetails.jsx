@@ -181,6 +181,7 @@ export default function ProductDetails() {
                     <div>
                         <h1 className="text-3xl font-bold">{product.name}</h1>
                         <p className="text-gray-200 mt-2">{product.description}</p>
+                        <p className="text-gray-200 mt-2">Delivery charges:Free</p>
                         {discountedPrice
                             ? <div className="flex gap-2 mt-3 items-center">
                                 <span className="line-through text-gray-300 text-xl">{price}Rs</span>

@@ -187,7 +187,7 @@ export default function CartPage() {
                                         className="h-40 w-full object-contain group-hover:object-cover rounded-xl mb-3 transition-all duration-300"
                                     />
                                     <h2 className="text-lg font-bold">{item.product?.name}</h2>
-                                    <p className="text-gray-200">{item.product?.description}</p>
+
 
                                     {item.product?.availableColors && (
                                         <div className="flex gap-2 mt-2">
@@ -217,7 +217,7 @@ export default function CartPage() {
                                     )}
 
                                     <div className="flex justify-between mt-2 font-semibold items-center">
-                                        <span className="text-lg font-bold">
+                                        <span className="text-xl font-bold text-yellow-400">
                                             {itemPrice}Rs
                                             {itemPrice !== (item.product?.price || 0) && (
                                                 <span className="line-through text-sm text-gray-300 ml-1">${item.product?.price}</span>
@@ -252,7 +252,7 @@ export default function CartPage() {
                                     <div className="flex flex-col">
                                         <span>{item.product?.name}</span>
                                         <span className="text-sm text-gray-200">
-                                            ${itemPrice}
+                                            {itemPrice}Rs
                                             {itemPrice !== (item.product?.price || 0) && (
                                                 <span className="line-through text-xs text-gray-400 ml-1">${item.product.price}</span>
                                             )}
@@ -262,7 +262,7 @@ export default function CartPage() {
                                     </div>
                                 </div>
                                 <span className="text-lg font-bold">{item.quantity}</span>
-                                <span className="text-lg font-bold">${itemPrice * item.quantity}</span>
+                                <span className="text-lg font-bold">{itemPrice * item.quantity}Rs</span>
                             </div>
                         );
                     })}

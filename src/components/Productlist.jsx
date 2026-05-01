@@ -293,6 +293,7 @@ export default function Productlist() {
                 )}
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-3 sm:gap-4 lg:gap-6">
+                    <h2>Just for you</h2>
                     {filteredProducts.map((item, index) => {
                         const productContent = (
                             <div
@@ -313,7 +314,7 @@ export default function Productlist() {
                                         handleViewDetails(item._id)
                                     }
                                 >
-                                    {item.name}
+                                    {item.name.slice(0, 60)}...
                                 </h2>
 
                                 {item.discountedPrice ? (
@@ -321,7 +322,7 @@ export default function Productlist() {
                                         <span className="line-through mr-2">
                                             {item.price}Rs
                                         </span>
-                                        <span className="font-bold">
+                                        <span className="text-xl font-bold text-yellow-400">
                                             {item.discountedPrice}Rs
                                         </span>
                                     </p>
