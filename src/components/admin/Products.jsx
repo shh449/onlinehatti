@@ -24,7 +24,7 @@ export default function Products() {
     const [currentProduct, setCurrentProduct] = useState(emptyProduct);
 
     const colorOptions = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FFA500", "#800080"];
-    const sizeOptions = ["XS", "S", "M", "L", "XL", "XXL"];
+    const sizeOptions = ["XS", "S", "M", "L", "XL", "XXL", "7", "8", "9", "10", "11", "12"];
     const API = import.meta.env.VITE_API_URL;
     // Fetch all products
     const fetchProducts = async () => {
