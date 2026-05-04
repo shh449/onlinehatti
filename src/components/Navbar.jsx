@@ -5,12 +5,14 @@ import PoliciesDropdown from "./Policies";
 export default function Navbar({ searchTerm, setSearchTerm, onCategorySelect, activeCategory }) {
     const navigate = useNavigate();
     const location = useLocation();
+
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [loadingBarWidth, setLoadingBarWidth] = useState(0);
     const [loading, setLoading] = useState(false);
     const [categoryOpen, setCategoryOpen] = useState(false);
+    const [mobileCategoryOpen, setMobileCategoryOpen] = useState(false);
 
-    const categories = ["all", "clothes", "shoes", "watches", "fashion bags"];
+    const categories = ["all", "clothes", "shoes", "watches", "fashion bags", "mens clothes", "kids clothes", "kithchenware", "home decore", "Electronic Accessories"];
 
     // Logout
     const handleLogout = () => {
@@ -18,7 +20,41 @@ export default function Navbar({ searchTerm, setSearchTerm, onCategorySelect, ac
         navigate("/login");
     };
 
-    // Navigate Home
+    // Loading bar
+    const triggerLoadingBar = () => {
+        setLoading(true);
+        setLoadingBarWidth(0);
+
+        let width = 0;
+        const interval = setInterval(() => {
+            width += Math.random() * 10;
+            if (width >= 100) {
+                width = 100;
+                clearInterval(interval);
+                setTimeout(() => setLoading(false), 300);
+            }
+            setLoadingBarWidth(width);
+        }, 50);
+    };
+
+    // Category handler (FIX for blank page issue)
+    const handleCategoryClick = (cat) => {
+        if (onCategorySelect) {
+            onCategorySelect(cat);
+        }
+
+        // Always ensure navigation happens BEFORE UI updates
+        if (location.pathname !== "/") {
+            navigate("/");
+        }
+
+        triggerLoadingBar();
+        setCategoryOpen(false);
+        setMobileCategoryOpen(false);
+        setMobileMenuOpen(false);
+    };
+
+    // Home
     const handleHomeClick = () => {
         navigate("/");
         if (onCategorySelect) onCategorySelect("all");
@@ -35,33 +71,19 @@ export default function Navbar({ searchTerm, setSearchTerm, onCategorySelect, ac
     const getActiveClass = (active) =>
         `font-medium ${active ? "text-[#eb6a00]" : "text-white hover:text-[#eb6a00]"}`;
 
-    // Top loading bar simulation
-    const triggerLoadingBar = () => {
-        setLoading(true);
-        setLoadingBarWidth(0);
-        let width = 0;
-        const interval = setInterval(() => {
-            width += Math.random() * 10; // Random increment
-            if (width >= 100) {
-                width = 100;
-                clearInterval(interval);
-                setTimeout(() => setLoading(false), 300); // small delay
-            }
-            setLoadingBarWidth(width);
-        }, 50);
-    };
-
     useEffect(() => {
-        // Trigger loading bar on first mount
         triggerLoadingBar();
     }, []);
 
     return (
         <nav className="fixed top-0 left-0 w-full bg-[#124b68]/30 backdrop-blur-lg shadow-md z-50">
 
-            {/* Top Loading Bar */}
+            {/* Loading Bar */}
             {loading && (
-                <div className="h-1 bg-orange-500 absolute top-0 left-0 transition-all duration-75" style={{ width: `${loadingBarWidth}%` }} />
+                <div
+                    className="h-1 bg-orange-500 absolute top-0 left-0 transition-all duration-75"
+                    style={{ width: `${loadingBarWidth}%` }}
+                />
             )}
 
             <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
@@ -69,13 +91,18 @@ export default function Navbar({ searchTerm, setSearchTerm, onCategorySelect, ac
                 {/* Logo */}
                 <div className="flex items-center space-x-2 cursor-pointer" onClick={handleHomeClick}>
                     <img src="/images/oh.png" alt="Logo" className="w-14 h-14 rounded-full" />
-                    <span className="text-white font-bold text-xl hover:text-[#eb6a00]">OnlineHatti</span>
+                    <span className="text-white font-bold text-xl hover:text-[#eb6a00]">
+                        OnlineHatti
+                    </span>
                 </div>
 
                 {/* Desktop Menu */}
                 <div className="hidden md:flex items-center space-x-4">
+
                     {isProductDetailsPage || isCartPage || isOrdersPage ? (
-                        <button onClick={handleHomeClick} className={getActiveClass(isHomePage)}>Home</button>
+                        <button onClick={handleHomeClick} className={getActiveClass(isHomePage)}>
+                            Home
+                        </button>
                     ) : (
                         <div className="relative">
                             <button
@@ -90,11 +117,7 @@ export default function Navbar({ searchTerm, setSearchTerm, onCategorySelect, ac
                                     {categories.map((cat) => (
                                         <button
                                             key={cat}
-                                            onClick={() => {
-                                                onCategorySelect(cat);
-                                                triggerLoadingBar();
-                                                setCategoryOpen(false);
-                                            }}
+                                            onClick={() => handleCategoryClick(cat)}
                                             className={`text-left px-4 py-2 hover:bg-[#eb6a00]/20 capitalize ${activeCategory === cat ? "text-[#eb6a00]" : "text-white"
                                                 }`}
                                         >
@@ -111,22 +134,35 @@ export default function Navbar({ searchTerm, setSearchTerm, onCategorySelect, ac
                         type="text"
                         placeholder="Search..."
                         value={searchTerm}
-                        onChange={e => setSearchTerm(e.target.value)}
+                        onChange={(e) => setSearchTerm(e.target.value)}
                         className="px-2 py-1 rounded bg-white/80 text-black focus:outline-none"
                     />
 
-                    {/* Cart & Orders */}
                     <Link to="/cart" className={getActiveClass(isCartPage)}>Cart</Link>
                     <Link to="/myorders" className={getActiveClass(isOrdersPage)}>My Orders</Link>
                     <PoliciesDropdown />
 
-                    {/* Logout */}
-                    <button onClick={handleLogout} className="text-white hover:text-[#eb6a00] font-medium">Logout</button>
+                    <button onClick={handleLogout} className="text-white hover:text-[#eb6a00] font-medium">
+                        Logout
+                    </button>
                 </div>
 
-                {/* Mobile Menu Button */}
-                <div className="md:hidden flex items-center">
-                    <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-white text-2xl">
+                {/* Mobile Right Side (Search + Menu) */}
+                <div className="md:hidden flex items-center space-x-2">
+
+                    {/* Search OUTSIDE menu (FIX) */}
+                    <input
+                        type="text"
+                        placeholder="Search..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="px-2 py-1 rounded bg-white/80 text-black focus:outline-none w-28"
+                    />
+
+                    <button
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                        className="text-white text-2xl"
+                    >
                         {mobileMenuOpen ? "✖" : "☰"}
                     </button>
                 </div>
@@ -135,45 +171,58 @@ export default function Navbar({ searchTerm, setSearchTerm, onCategorySelect, ac
             {/* Mobile Menu */}
             {mobileMenuOpen && (
                 <div className="md:hidden bg-[#124b68]/80 backdrop-blur-lg p-4 flex flex-col space-y-3">
+
                     {isProductDetailsPage || isCartPage || isOrdersPage ? (
-                        <button onClick={handleHomeClick} className={getActiveClass(isHomePage) + " text-left"}>Home</button>
+                        <button
+                            onClick={handleHomeClick}
+                            className={getActiveClass(isHomePage) + " text-left"}
+                        >
+                            Home
+                        </button>
                     ) : (
                         <div className="border-t border-white/20 pt-2">
-                            <p className="text-white font-semibold mb-2">Categories</p>
 
-                            {categories.map((cat) => (
-                                <button
-                                    key={cat}
-                                    onClick={() => {
-                                        onCategorySelect(cat);
-                                        setMobileMenuOpen(false);
-                                        triggerLoadingBar();
-                                    }}
-                                    className={`block text-left w-full py-1 capitalize ${activeCategory === cat ? "text-[#eb6a00]" : "text-white"
-                                        }`}
-                                >
-                                    {cat}
-                                </button>
-                            ))}
+                            {/* Dropdown behavior (FIX) */}
+                            <button
+                                onClick={() => setMobileCategoryOpen(!mobileCategoryOpen)}
+                                className="text-white font-semibold mb-2"
+                            >
+                                Categories ▼
+                            </button>
+
+                            {mobileCategoryOpen && (
+                                <div className="flex flex-col">
+                                    {categories.map((cat) => (
+                                        <button
+                                            key={cat}
+                                            onClick={() => handleCategoryClick(cat)}
+                                            className={`text-left py-1 capitalize ${activeCategory === cat ? "text-[#eb6a00]" : "text-white"
+                                                }`}
+                                        >
+                                            {cat}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     )}
 
-                    {/* Search */}
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        value={searchTerm}
-                        onChange={e => setSearchTerm(e.target.value)}
-                        className="px-2 py-1 rounded bg-white/80 text-black focus:outline-none w-full"
-                    />
+                    <Link to="/cart" onClick={() => setMobileMenuOpen(false)} className={getActiveClass(isCartPage) + " text-left"}>
+                        Cart
+                    </Link>
 
-                    {/* Cart & Orders */}
-                    <Link to="/cart" onClick={() => setMobileMenuOpen(false)} className={getActiveClass(isCartPage) + " text-left"}>Cart</Link>
-                    <Link to="/myorders" onClick={() => setMobileMenuOpen(false)} className={getActiveClass(isOrdersPage) + " text-left"}>My Orders</Link>
+                    <Link to="/myorders" onClick={() => setMobileMenuOpen(false)} className={getActiveClass(isOrdersPage) + " text-left"}>
+                        My Orders
+                    </Link>
+
                     <PoliciesDropdown />
 
-                    {/* Logout */}
-                    <button onClick={handleLogout} className="text-white hover:text-[#eb6a00] font-medium text-left">Logout</button>
+                    <button
+                        onClick={handleLogout}
+                        className="text-white hover:text-[#eb6a00] font-medium text-left"
+                    >
+                        Logout
+                    </button>
                 </div>
             )}
         </nav>
