@@ -53,8 +53,8 @@ export default function Navbar({
         "fashion bags",
         "mens clothes",
         "kids clothes",
-        "kithchenware",
-        "home decore",
+        "kitchenware",
+        "home decor",
         "Electronic Accessories",
     ];
 
@@ -233,8 +233,8 @@ export default function Navbar({
 
                                             <FaChevronDown
                                                 className={`text-xs transition-all duration-300 ${categoryOpen
-                                                        ? "rotate-180"
-                                                        : ""
+                                                    ? "rotate-180"
+                                                    : ""
                                                     }`}
                                             />
                                         </button>
@@ -258,9 +258,9 @@ export default function Navbar({
                                                                     )
                                                                 }
                                                                 className={`text-left px-4 py-3 rounded-2xl capitalize transition-all duration-300 flex items-center gap-3 ${activeCategory ===
-                                                                        cat
-                                                                        ? "bg-[#eb6a00] text-white shadow-lg"
-                                                                        : "text-white hover:bg-white/10"
+                                                                    cat
+                                                                    ? "bg-[#eb6a00] text-white shadow-lg"
+                                                                    : "text-white hover:bg-white/10"
                                                                     }`}
                                                             >
                                                                 <FaThLarge className="text-sm" />
@@ -393,8 +393,8 @@ export default function Navbar({
                         <button
                             onClick={handleHomeClick}
                             className={`flex flex-col items-center gap-1 text-xs font-medium transition-all duration-300 ${isHomePage
-                                    ? "text-[#eb6a00]"
-                                    : "text-white"
+                                ? "text-[#eb6a00]"
+                                : "text-white"
                                 }`}
                         >
                             <FaHome className="text-lg" />
@@ -422,8 +422,8 @@ export default function Navbar({
                         <Link
                             to="/cart"
                             className={`flex flex-col items-center gap-1 text-xs font-medium transition-all duration-300 ${isCartPage
-                                    ? "text-[#eb6a00]"
-                                    : "text-white"
+                                ? "text-[#eb6a00]"
+                                : "text-white"
                                 }`}
                         >
                             <FaShoppingCart className="text-lg" />
@@ -436,8 +436,8 @@ export default function Navbar({
                         <Link
                             to="/myorders"
                             className={`flex flex-col items-center gap-1 text-xs font-medium transition-all duration-300 ${isOrdersPage
-                                    ? "text-[#eb6a00]"
-                                    : "text-white"
+                                ? "text-[#eb6a00]"
+                                : "text-white"
                                 }`}
                         >
                             <FaClipboardList className="text-lg" />
@@ -553,8 +553,8 @@ export default function Navbar({
 
                                     <FaChevronDown
                                         className={`transition-all duration-300 ${mobileCategoryOpen
-                                                ? "rotate-180"
-                                                : ""
+                                            ? "rotate-180"
+                                            : ""
                                             }`}
                                     />
                                 </button>
@@ -576,9 +576,9 @@ export default function Navbar({
                                                         )
                                                     }
                                                     className={`text-left px-4 py-3 rounded-xl capitalize transition-all duration-300 ${activeCategory ===
-                                                            cat
-                                                            ? "bg-[#eb6a00] text-white"
-                                                            : "text-white hover:bg-white/10"
+                                                        cat
+                                                        ? "bg-[#eb6a00] text-white"
+                                                        : "text-white hover:bg-white/10"
                                                         }`}
                                                 >
                                                     {
