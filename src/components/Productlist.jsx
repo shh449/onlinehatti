@@ -160,7 +160,8 @@ export default function Productlist() {
     const filteredProducts = products.filter((p) => {
         const matchCategory =
             category === "all" ||
-            p.category?.toLowerCase() === category;
+            p.category?.toLowerCase() ===
+            category.toLowerCase();
 
         const matchSearch = p.name
             ?.toLowerCase()
@@ -384,8 +385,8 @@ export default function Productlist() {
 
                     <span
                         className={`text-xs px-2 py-1 rounded-full font-semibold ${item.countInStock > 0
-                                ? "bg-green-500/20 text-green-300"
-                                : "bg-red-500/20 text-red-300"
+                            ? "bg-green-500/20 text-green-300"
+                            : "bg-red-500/20 text-red-300"
                             }`}
                     >
                         {item.countInStock > 0
@@ -542,124 +543,153 @@ export default function Productlist() {
                     </h2>
 
                     <p className="text-white/70 mt-3 text-sm sm:text-base max-w-2xl mx-auto">
-                        Discover premium
-                        products with
-                        unbeatable prices
-                        and fast delivery.
+                        Discover premium products
+                        with unbeatable prices and
+                        fast delivery.
                     </p>
 
                     <div className="w-28 h-1 bg-gradient-to-r from-orange-400 via-white to-orange-300 mx-auto mt-5 rounded-full shadow-lg"></div>
                 </div>
 
-                {/* CATEGORY SECTIONS */}
-                {categories
-                    .filter((c) => c !== "all")
-                    .map((cat) => {
-                        const categoryProducts =
-                            getCategoryProducts(
-                                cat
-                            );
+                {/* ================= HOME CATEGORY SECTIONS ================= */}
+                {category === "all" ? (
+                    <>
+                        {categories
+                            .filter((c) => c !== "all")
+                            .map((cat) => {
+                                const categoryProducts =
+                                    getCategoryProducts(
+                                        cat
+                                    );
 
-                        if (
-                            categoryProducts.length ===
-                            0
-                        )
-                            return null;
+                                if (
+                                    categoryProducts.length ===
+                                    0
+                                )
+                                    return null;
 
-                        return (
-                            <div
-                                key={cat}
-                                className="mb-14"
-                            >
-                                {/* Heading */}
-                                <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
-                                    <div>
-                                        <div className="flex items-center gap-2 mb-1">
-                                            <FaStar className="text-orange-300" />
+                                return (
+                                    <div
+                                        key={cat}
+                                        className="mb-14"
+                                    >
+                                        {/* Heading */}
+                                        <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
+                                            <div>
+                                                <div className="flex items-center gap-2 mb-1">
+                                                    <FaStar className="text-orange-300" />
 
-                                            <span className="text-orange-200 text-sm uppercase tracking-widest">
-                                                Collection
-                                            </span>
+                                                    <span className="text-orange-200 text-sm uppercase tracking-widest">
+                                                        Collection
+                                                    </span>
+                                                </div>
+
+                                                <h2 className="text-2xl sm:text-3xl font-extrabold text-white capitalize">
+                                                    {cat}
+                                                </h2>
+
+                                                <p className="text-white/60 text-sm mt-1">
+                                                    Explore
+                                                    premium{" "}
+                                                    {
+                                                        cat
+                                                    }{" "}
+                                                    collection
+                                                </p>
+                                            </div>
+
+                                            {/* MORE BUTTON */}
+                                            <button
+                                                onClick={() =>
+                                                    setCategory(
+                                                        cat
+                                                    )
+                                                }
+                                                className="flex items-center gap-2 bg-white/10 hover:bg-white/20 transition-all text-white px-4 py-2 rounded-full backdrop-blur-lg border border-white/10"
+                                            >
+                                                More
+
+                                                <FaArrowRight />
+                                            </button>
                                         </div>
 
-                                        <h2 className="text-2xl sm:text-3xl font-extrabold text-white capitalize">
-                                            {cat}
-                                        </h2>
-
-                                        <p className="text-white/60 text-sm mt-1">
-                                            Explore
-                                            premium{" "}
-                                            {cat}{" "}
-                                            collection
-                                        </p>
-                                    </div>
-
-                                    <button
-                                        onClick={() =>
-                                            setCategory(
-                                                cat
-                                            )
-                                        }
-                                        className="flex items-center gap-2 bg-white/10 hover:bg-white/20 transition-all text-white px-4 py-2 rounded-full backdrop-blur-lg border border-white/10"
-                                    >
-                                        More
-
-                                        <FaArrowRight />
-                                    </button>
-                                </div>
-
-                                {/* Products */}
-                                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-5 lg:gap-6">
-                                    {categoryProducts
-                                        .slice(0, 6)
-                                        .map(
-                                            (
-                                                item,
-                                                index
-                                            ) =>
-                                                ProductCard(
-                                                    item,
-                                                    index,
-                                                    categoryProducts.length
+                                        {/* Products */}
+                                        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-5 lg:gap-6">
+                                            {categoryProducts
+                                                .slice(
+                                                    0,
+                                                    6
                                                 )
-                                        )}
+                                                .map(
+                                                    (
+                                                        item,
+                                                        index
+                                                    ) =>
+                                                        ProductCard(
+                                                            item,
+                                                            index,
+                                                            categoryProducts.length
+                                                        )
+                                                )}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                    </>
+                ) : (
+                    <>
+                        {/* ================= FULL CATEGORY PAGE ================= */}
+
+                        <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
+                            <div>
+                                <div className="flex items-center gap-2 mb-2">
+                                    <FaFire className="text-orange-300" />
+
+                                    <span className="text-orange-200 uppercase tracking-widest text-sm">
+                                        Category
+                                    </span>
                                 </div>
-                            </div>
-                        );
-                    })}
 
-                {/* ALL PRODUCTS */}
-                <div className="mb-8">
-                    <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
-                        <div>
-                            <div className="flex items-center gap-2 mb-1">
-                                <FaFire className="text-orange-300" />
+                                <h2 className="text-3xl sm:text-4xl font-black text-white capitalize">
+                                    {category}
+                                </h2>
 
-                                <span className="text-orange-200 text-sm uppercase tracking-widest">
-                                    Trending
-                                </span>
+                                <p className="text-white/60 mt-2 text-sm sm:text-base">
+                                    Showing all
+                                    products from{" "}
+                                    {category}
+                                </p>
                             </div>
 
-                            <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-                                All Products
-                            </h2>
+                            {/* BACK BUTTON */}
+                            <button
+                                onClick={() =>
+                                    setCategory(
+                                        "all"
+                                    )
+                                }
+                                className="bg-white/10 hover:bg-white/20 text-white px-5 py-3 rounded-full backdrop-blur-lg border border-white/10 transition-all"
+                            >
+                                ← Back To Home
+                            </button>
                         </div>
-                    </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-5 lg:gap-6">
-                        {filteredProducts.map(
-                            (
-                                item,
-                                index
-                            ) =>
-                                ProductCard(
+                        {/* FULL PRODUCTS */}
+                        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-5 lg:gap-6">
+                            {filteredProducts.map(
+                                (
                                     item,
-                                    index,
-                                    filteredProducts.length
-                                )
-                        )}
-                    </div>
-                </div>
+                                    index
+                                ) =>
+                                    ProductCard(
+                                        item,
+                                        index,
+                                        filteredProducts.length
+                                    )
+                            )}
+                        </div>
+                    </>
+                )}
 
                 {/* Loading */}
                 {loading && page > 1 && (
@@ -818,8 +848,7 @@ export default function Productlist() {
                                 mb: 1,
                             }}
                         >
-                            Shipping
-                            Information
+                            Shipping Information
                         </Typography>
 
                         {[
@@ -833,18 +862,12 @@ export default function Productlist() {
                                 key={field}
                                 placeholder={
                                     field
-                                        .charAt(
-                                            0
-                                        )
+                                        .charAt(0)
                                         .toUpperCase() +
-                                    field.slice(
-                                        1
-                                    )
+                                    field.slice(1)
                                 }
                                 className="w-full mb-3 p-3 rounded-xl bg-black/30 backdrop-blur-md text-white placeholder-gray-300 border border-white/20 focus:border-orange-400 focus:ring-2 focus:ring-orange-300/40 focus:outline-none transition-all"
-                                onChange={(
-                                    e
-                                ) =>
+                                onChange={(e) =>
                                     setShippingAddress(
                                         {
                                             ...shippingAddress,
@@ -866,25 +889,20 @@ export default function Productlist() {
                                 mb: 1,
                             }}
                         >
-                            Payment
-                            Method
+                            Payment Method
                         </Typography>
 
                         <select
-                            value={
-                                paymentMethod
-                            }
+                            value={paymentMethod}
                             onChange={(e) =>
                                 setPaymentMethod(
-                                    e.target
-                                        .value
+                                    e.target.value
                                 )
                             }
                             className="w-full mb-4 p-3 text-white bg-black/30 rounded-xl border border-white/20 focus:border-orange-400 focus:ring-2 focus:ring-orange-300/40 focus:outline-none"
                         >
                             <option value="COD">
-                                Cash on
-                                Delivery
+                                Cash on Delivery
                             </option>
 
                             <option value="Easypaisa">
@@ -895,9 +913,7 @@ export default function Productlist() {
                         {!selectedOrderId && (
                             <Button
                                 fullWidth
-                                onClick={
-                                    placeOrder
-                                }
+                                onClick={placeOrder}
                                 sx={{
                                     background:
                                         "#6b4f2c",
@@ -923,13 +939,10 @@ export default function Productlist() {
                         <Button
                             fullWidth
                             onClick={() =>
-                                setShowModal(
-                                    false
-                                )
+                                setShowModal(false)
                             }
                             sx={{
-                                background:
-                                    "gray",
+                                background: "gray",
 
                                 color: "white",
 
