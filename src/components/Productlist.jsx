@@ -81,8 +81,8 @@ export default function Productlist() {
         "fashion bags",
         "mens clothes",
         "kids clothes",
-        "kithchenware",
-        "home decore",
+        "kitchenware",
+        "home decor",
         "Electronic Accessories",
     ];
 
@@ -95,10 +95,11 @@ export default function Productlist() {
 
             const data = await res.json();
 
-            if (!res.ok)
+            if (!res.ok) {
                 throw new Error(
                     data.message || "Failed to fetch products"
                 );
+            }
 
             if (pageNumber === 1) {
                 setProducts(data.products || []);
@@ -134,8 +135,9 @@ export default function Productlist() {
         (node) => {
             if (loading) return;
 
-            if (observer.current)
+            if (observer.current) {
                 observer.current.disconnect();
+            }
 
             observer.current = new IntersectionObserver(
                 (entries) => {
@@ -148,13 +150,17 @@ export default function Productlist() {
                 }
             );
 
-            if (node) observer.current.observe(node);
+            if (node) {
+                observer.current.observe(node);
+            }
         },
         [loading, hasMore]
     );
 
     useEffect(() => {
-        if (page > 1) fetchProducts(page);
+        if (page > 1) {
+            fetchProducts(page);
+        }
     }, [page]);
 
     // ================= FILTER =================
@@ -296,7 +302,7 @@ export default function Productlist() {
     };
 
     // ================= LOADING =================
-    if (loading && page === 1)
+    if (loading && page === 1) {
         return (
             <>
                 <Navbar
@@ -311,6 +317,7 @@ export default function Productlist() {
                 </div>
             </>
         );
+    }
 
     // ================= PRODUCT CARD =================
     const ProductCard = (
@@ -395,8 +402,8 @@ export default function Productlist() {
 
                     <span
                         className={`text-xs px-2 py-1 rounded-full font-semibold ${item.countInStock > 0
-                            ? "bg-green-500/20 text-green-300"
-                            : "bg-red-500/20 text-red-300"
+                                ? "bg-green-500/20 text-green-300"
+                                : "bg-red-500/20 text-red-300"
                             }`}
                     >
                         {item.countInStock > 0
@@ -529,9 +536,9 @@ export default function Productlist() {
                 {notification.message && (
                     <div
                         className={`fixed top-4 right-4 px-4 py-2 rounded-xl text-white z-50 shadow-2xl ${notification.type ===
-                            "success"
-                            ? "bg-green-500"
-                            : "bg-red-500"
+                                "success"
+                                ? "bg-green-500"
+                                : "bg-red-500"
                             }`}
                     >
                         {notification.message}
@@ -575,8 +582,9 @@ export default function Productlist() {
                                 if (
                                     categoryProducts.length ===
                                     0
-                                )
+                                ) {
                                     return null;
+                                }
 
                                 return (
                                     <div
@@ -651,98 +659,75 @@ export default function Productlist() {
                         {/* ================= FILTERED PAGE ================= */}
 
                         <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
-
                             <div>
-
                                 <div className="flex items-center gap-2 mb-2">
-
                                     <FaFire className="text-orange-300" />
 
                                     <span className="text-orange-200 uppercase tracking-widest text-sm">
-
                                         {searchTerm
                                             ? "Search Results"
                                             : "Category"}
-
                                     </span>
-
                                 </div>
 
                                 <h2 className="text-3xl sm:text-4xl font-black text-white capitalize">
-
                                     {searchTerm
                                         ? `Results for "${searchTerm}"`
                                         : category}
-
                                 </h2>
 
                                 <p className="text-white/60 mt-2 text-sm sm:text-base">
-
                                     {searchTerm
                                         ? `Showing matching products`
                                         : `Showing all products from ${category}`}
-
                                 </p>
-
                             </div>
 
                             {/* BACK BUTTON */}
 
-                            {(category !== "all" || searchTerm) && (
-
-                                <button
-                                    onClick={() => {
-                                        setCategory("all");
-                                        setSearchTerm("");
-                                    }}
-                                    className="bg-white/10 hover:bg-white/20 text-white px-5 py-3 rounded-full backdrop-blur-lg border border-white/10 transition-all"
-                                >
-
-                                    ← Back To Home
-
-                                </button>
-
-                            )}
-
+                            {(category !== "all" ||
+                                searchTerm) && (
+                                    <button
+                                        onClick={() => {
+                                            setCategory("all");
+                                            setSearchTerm("");
+                                        }}
+                                        className="bg-white/10 hover:bg-white/20 text-white px-5 py-3 rounded-full backdrop-blur-lg border border-white/10 transition-all"
+                                    >
+                                        ← Back To Home
+                                    </button>
+                                )}
                         </div>
 
                         {/* PRODUCTS */}
 
-                        {filteredProducts.length > 0 ? (
-
+                        {filteredProducts.length >
+                            0 ? (
                             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-5 lg:gap-6">
-
                                 {filteredProducts.map(
-                                    (item, index) =>
+                                    (
+                                        item,
+                                        index
+                                    ) =>
                                         ProductCard(
                                             item,
                                             index,
                                             filteredProducts.length
                                         )
                                 )}
-
                             </div>
-
                         ) : (
-
                             <div className="flex flex-col items-center justify-center py-24 text-center">
-
                                 <div className="w-24 h-24 rounded-full bg-white/10 backdrop-blur-xl flex items-center justify-center mb-5">
-
                                     <FaSearch className="text-3xl text-orange-300" />
-
                                 </div>
 
                                 <h2 className="text-2xl sm:text-3xl font-bold text-white">
-
                                     No Products Found
-
                                 </h2>
 
                                 <p className="text-white/60 mt-3 max-w-md">
-
                                     Try searching with another keyword or browse another category.
-
                                 </p>
 
                                 <button
@@ -752,260 +737,265 @@ export default function Productlist() {
                                     }}
                                     className="mt-6 bg-[#eb6a00] hover:bg-[#cf5d00] text-white px-6 py-3 rounded-full transition-all"
                                 >
-
                                     Back To Home
-
                                 </button>
-
                             </div>
-
                         )}
-
                     </>
-
-                        {/* FULL PRODUCTS */}
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-5 lg:gap-6">
-                    {filteredProducts.map(
-                        (
-                            item,
-                            index
-                        ) =>
-                            ProductCard(
-                                item,
-                                index,
-                                filteredProducts.length
-                            )
-                    )}
-                </div>
-            </>
                 )}
 
-            {/* Loading */}
-            {loading && page > 1 && (
-                <div className="flex justify-center py-6">
-                    <Spinner />
-                </div>
-            )}
+                {/* Loading */}
+                {loading && page > 1 && (
+                    <div className="flex justify-center py-6">
+                        <Spinner />
+                    </div>
+                )}
 
-            {/* MODAL */}
-            <Modal
-                open={showModal}
-                onClose={() =>
-                    setShowModal(false)
-                }
-            >
-                <Box
-                    sx={{
-                        position: "absolute",
-
-                        top: "50%",
-
-                        left: "50%",
-
-                        transform:
-                            "translate(-50%, -50%)",
-
-                        width: {
-                            xs: "96%",
-
-                            sm: "90%",
-
-                            md: "500px",
-
-                            lg: "550px",
-                        },
-
-                        maxHeight: "90vh",
-
-                        overflowY: "auto",
-
-                        bgcolor:
-                            "rgba(255,255,255,0.1)",
-
-                        backdropFilter:
-                            "blur(16px)",
-
-                        border:
-                            "1px solid rgba(255,255,255,0.1)",
-
-                        borderRadius: 3,
-
-                        boxShadow: 24,
-
-                        p: {
-                            xs: 2,
-                            sm: 3,
-                        },
-
-                        color: "white",
-
-                        scrollBehavior:
-                            "smooth",
-                    }}
+                {/* MODAL */}
+                <Modal
+                    open={showModal}
+                    onClose={() =>
+                        setShowModal(false)
+                    }
                 >
-                    <Typography
-                        variant="h6"
-                        className="text-center mb-4 font-bold"
+                    <Box
+                        sx={{
+                            position: "absolute",
+
+                            top: "50%",
+
+                            left: "50%",
+
+                            transform:
+                                "translate(-50%, -50%)",
+
+                            width: {
+                                xs: "96%",
+
+                                sm: "90%",
+
+                                md: "500px",
+
+                                lg: "550px",
+                            },
+
+                            maxHeight: "90vh",
+
+                            overflowY: "auto",
+
+                            bgcolor:
+                                "rgba(255,255,255,0.1)",
+
+                            backdropFilter:
+                                "blur(16px)",
+
+                            border:
+                                "1px solid rgba(255,255,255,0.1)",
+
+                            borderRadius: 3,
+
+                            boxShadow: 24,
+
+                            p: {
+                                xs: 2,
+                                sm: 3,
+                            },
+
+                            color: "white",
+
+                            scrollBehavior:
+                                "smooth",
+                        }}
                     >
-                        Order Summary
-                    </Typography>
+                        <Typography
+                            variant="h6"
+                            className="text-center mb-4 font-bold"
+                        >
+                            Order Summary
+                        </Typography>
 
-                    {selectedProduct && (
-                        <>
-                            <div className="flex justify-between mb-3">
-                                <span>
-                                    {
-                                        selectedProduct.name
-                                    }
-                                </span>
-
-                                <span>
-                                    {calculatePrice(
-                                        selectedProduct
-                                    )}
-                                    Rs
-                                </span>
-                            </div>
-
-                            <div className="flex justify-between items-center mb-4">
-                                <span>
-                                    Quantity
-                                </span>
-
-                                <div className="flex gap-2 items-center">
-                                    <Button
-                                        onClick={() =>
-                                            setQuantity(
-                                                (
-                                                    q
-                                                ) =>
-                                                    q >
-                                                        1
-                                                        ? q -
-                                                        1
-                                                        : 1
-                                            )
-                                        }
-                                    >
-                                        −
-                                    </Button>
-
-                                    <span className="px-3">
+                        {selectedProduct && (
+                            <>
+                                <div className="flex justify-between mb-3">
+                                    <span>
                                         {
-                                            quantity
+                                            selectedProduct.name
                                         }
                                     </span>
 
-                                    <Button
-                                        onClick={() =>
-                                            quantity <
-                                            selectedProduct.countInStock &&
-                                            setQuantity(
-                                                (
-                                                    q
-                                                ) =>
-                                                    q +
-                                                    1
-                                            )
-                                        }
-                                    >
-                                        +
-                                    </Button>
+                                    <span>
+                                        {calculatePrice(
+                                            selectedProduct
+                                        )}
+                                        Rs
+                                    </span>
                                 </div>
-                            </div>
 
-                            <div className="flex justify-between font-bold mb-4">
-                                <span>
-                                    Total
-                                </span>
+                                <div className="flex justify-between items-center mb-4">
+                                    <span>
+                                        Quantity
+                                    </span>
 
-                                <span>
-                                    {calculateTotal(
-                                        selectedProduct,
-                                        quantity
-                                    )}
-                                    Rs
-                                </span>
-                            </div>
-                        </>
-                    )}
+                                    <div className="flex gap-2 items-center">
+                                        <Button
+                                            onClick={() =>
+                                                setQuantity(
+                                                    (
+                                                        q
+                                                    ) =>
+                                                        q >
+                                                            1
+                                                            ? q -
+                                                            1
+                                                            : 1
+                                                )
+                                            }
+                                        >
+                                            −
+                                        </Button>
 
-                    {/* Shipping */}
-                    <Typography
-                        variant="subtitle1"
-                        sx={{
-                            mb: 1,
-                        }}
-                    >
-                        Shipping Information
-                    </Typography>
+                                        <span className="px-3">
+                                            {
+                                                quantity
+                                            }
+                                        </span>
 
-                    {[
-                        "address",
-                        "city",
-                        "postalcode",
-                        "country",
-                        "contact",
-                    ].map((field) => (
-                        <input
-                            key={field}
-                            placeholder={
-                                field
-                                    .charAt(0)
-                                    .toUpperCase() +
-                                field.slice(1)
-                            }
-                            className="w-full mb-3 p-3 rounded-xl bg-black/30 backdrop-blur-md text-white placeholder-gray-300 border border-white/20 focus:border-orange-400 focus:ring-2 focus:ring-orange-300/40 focus:outline-none transition-all"
+                                        <Button
+                                            onClick={() =>
+                                                quantity <
+                                                selectedProduct.countInStock &&
+                                                setQuantity(
+                                                    (
+                                                        q
+                                                    ) =>
+                                                        q +
+                                                        1
+                                                )
+                                            }
+                                        >
+                                            +
+                                        </Button>
+                                    </div>
+                                </div>
+
+                                <div className="flex justify-between font-bold mb-4">
+                                    <span>
+                                        Total
+                                    </span>
+
+                                    <span>
+                                        {calculateTotal(
+                                            selectedProduct,
+                                            quantity
+                                        )}
+                                        Rs
+                                    </span>
+                                </div>
+                            </>
+                        )}
+
+                        {/* Shipping */}
+                        <Typography
+                            variant="subtitle1"
+                            sx={{
+                                mb: 1,
+                            }}
+                        >
+                            Shipping Information
+                        </Typography>
+
+                        {[
+                            "address",
+                            "city",
+                            "postalcode",
+                            "country",
+                            "contact",
+                        ].map((field) => (
+                            <input
+                                key={field}
+                                placeholder={
+                                    field
+                                        .charAt(0)
+                                        .toUpperCase() +
+                                    field.slice(1)
+                                }
+                                className="w-full mb-3 p-3 rounded-xl bg-black/30 backdrop-blur-md text-white placeholder-gray-300 border border-white/20 focus:border-orange-400 focus:ring-2 focus:ring-orange-300/40 focus:outline-none transition-all"
+                                onChange={(e) =>
+                                    setShippingAddress(
+                                        {
+                                            ...shippingAddress,
+
+                                            [field]:
+                                                e
+                                                    .target
+                                                    .value,
+                                        }
+                                    )
+                                }
+                            />
+                        ))}
+
+                        {/* Payment */}
+                        <Typography
+                            variant="subtitle1"
+                            sx={{
+                                mb: 1,
+                            }}
+                        >
+                            Payment Method
+                        </Typography>
+
+                        <select
+                            value={paymentMethod}
                             onChange={(e) =>
-                                setShippingAddress(
-                                    {
-                                        ...shippingAddress,
-
-                                        [field]:
-                                            e
-                                                .target
-                                                .value,
-                                    }
+                                setPaymentMethod(
+                                    e.target.value
                                 )
                             }
-                        />
-                    ))}
+                            className="w-full mb-4 p-3 text-white bg-black/30 rounded-xl border border-white/20 focus:border-orange-400 focus:ring-2 focus:ring-orange-300/40 focus:outline-none"
+                        >
+                            <option value="COD">
+                                Cash on Delivery
+                            </option>
 
-                    {/* Payment */}
-                    <Typography
-                        variant="subtitle1"
-                        sx={{
-                            mb: 1,
-                        }}
-                    >
-                        Payment Method
-                    </Typography>
+                            <option value="Easypaisa">
+                                Easypaisa
+                            </option>
+                        </select>
 
-                    <select
-                        value={paymentMethod}
-                        onChange={(e) =>
-                            setPaymentMethod(
-                                e.target.value
-                            )
-                        }
-                        className="w-full mb-4 p-3 text-white bg-black/30 rounded-xl border border-white/20 focus:border-orange-400 focus:ring-2 focus:ring-orange-300/40 focus:outline-none"
-                    >
-                        <option value="COD">
-                            Cash on Delivery
-                        </option>
+                        {!selectedOrderId && (
+                            <Button
+                                fullWidth
+                                onClick={placeOrder}
+                                sx={{
+                                    background:
+                                        "#6b4f2c",
 
-                        <option value="Easypaisa">
-                            Easypaisa
-                        </option>
-                    </select>
+                                    color: "white",
 
-                    {!selectedOrderId && (
+                                    mt: 1,
+
+                                    borderRadius:
+                                        "12px",
+
+                                    padding:
+                                        "12px",
+
+                                    fontWeight:
+                                        "bold",
+                                }}
+                            >
+                                Place Order
+                            </Button>
+                        )}
+
                         <Button
                             fullWidth
-                            onClick={placeOrder}
+                            onClick={() =>
+                                setShowModal(false)
+                            }
                             sx={{
-                                background:
-                                    "#6b4f2c",
+                                background: "gray",
 
                                 color: "white",
 
@@ -1021,37 +1011,11 @@ export default function Productlist() {
                                     "bold",
                             }}
                         >
-                            Place Order
+                            Cancel
                         </Button>
-                    )}
-
-                    <Button
-                        fullWidth
-                        onClick={() =>
-                            setShowModal(false)
-                        }
-                        sx={{
-                            background: "gray",
-
-                            color: "white",
-
-                            mt: 1,
-
-                            borderRadius:
-                                "12px",
-
-                            padding:
-                                "12px",
-
-                            fontWeight:
-                                "bold",
-                        }}
-                    >
-                        Cancel
-                    </Button>
-                </Box>
-            </Modal>
-        </div >
+                    </Box>
+                </Modal>
+            </div>
         </>
     );
 }
