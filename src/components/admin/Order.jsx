@@ -315,6 +315,7 @@ export default function Orders() {
                                 {selectedOrder.shippingAddress?.address},{" "}
                                 {selectedOrder.shippingAddress?.city},{" "}
                                 {selectedOrder.shippingAddress?.postalcode},{" "}
+                                {selectedOrder.shippingAddress?.contact},{" "}
                                 {selectedOrder.shippingAddress?.country}
                             </Typography>
 

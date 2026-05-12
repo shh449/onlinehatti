@@ -5,10 +5,8 @@ import Navbar from "./Navbar";
 import Button from "@mui/material/Button";
 import Spinner from "./Spinner";
 import { Modal, Box, Typography } from "@mui/material";
-import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
 
-
+const API = "https://onlinehattid-production.up.railway.app/api";
 
 export default function ProductDetails() {
     const { id } = useParams();
@@ -22,112 +20,217 @@ export default function ProductDetails() {
     const [selectedSize, setSelectedSize] = useState("");
     const [review, setReview] = useState({ rating: 0, comment: "" });
     const [showModal, setShowModal] = useState(false);
-    const [paymentMethod, setPaymentMethod] = useState("COD");
-    const [selectedOrderId, setSelectedOrderId] = useState(null);
-    const [shippingAddress, setShippingAddress] = useState({ address: "", city: "", postalcode: "", country: "", contact: "" });
-    const [notification, setNotification] = useState({ message: "", type: "" });
-    const [reviewsToShow, setReviewsToShow] = useState(5);
 
-    // Fetch product details
+    const [shippingAddress, setShippingAddress] = useState({
+        address: "",
+        city: "",
+        postalcode: "",
+        country: "",
+        contact: "",
+    });
+
+    const [notification, setNotification] = useState({
+        message: "",
+        type: "",
+    });
+
+    const token = localStorage.getItem("token");
+
+    const showNotification = (message, type = "success") => {
+        setNotification({ message, type });
+
+        setTimeout(() => {
+            setNotification({ message: "", type: "" });
+        }, 3000);
+    };
+
     const fetchProduct = async () => {
         try {
-            const res = await fetch(`https://onlinehattid-production.up.railway.app/api/product/fetchoneproduct/${id}`);
+            setLoading(true);
+
+            const res = await fetch(`${API}/product/fetchoneproduct/${id}`);
+
+            if (!res.ok) {
+                throw new Error("Failed to fetch product");
+            }
+
             const data = await res.json();
+
             setProduct(data);
-            setSelectedImage(data.images?.[0] || data.imageSrc);
+            setSelectedImage(data?.images?.[0] || "");
         } catch (err) {
             console.error(err);
+            showNotification("Failed to load product", "error");
         } finally {
-            setLoading(false); 9
+            setLoading(false);
         }
     };
 
-    useEffect(() => { fetchProduct(); }, [id]);
-
-    // Submit review
-    const submitReview = async () => {
-        if (!review.rating || !review.comment) return alert("Please provide rating and comment");
-        try {
-            await fetch(`https://onlinehattid-production.up.railway.app/api/product/review/${id}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json", "auth-token": localStorage.getItem("token") },
-                body: JSON.stringify(review),
-            });
-            setReview({ rating: 0, comment: "" });
-            setReviewsToShow(5);
-            fetchProduct();
-        } catch (err) { console.error(err); }
-    };
+    useEffect(() => {
+        fetchProduct();
+    }, [id]);
 
     const getCurrentPrice = () => {
-        if (!product) return { price: 0, discountedPrice: 0, stock: 0 };
-        if (selectedSize && product.sizePricing?.length) {
-            const sp = product.sizePricing.find(s => s.size === selectedSize);
-            if (sp) return { price: sp.price, discountedPrice: sp.discountedPrice, stock: sp.stock };
+        if (!product) {
+            return {
+                price: 0,
+                discountedPrice: 0,
+                stock: 0,
+            };
         }
-        return { price: product.price, discountedPrice: product.discountedPrice, stock: product.countInStock };
+
+        if (selectedSize && product?.sizePricing?.length > 0) {
+            const sizeData = product.sizePricing.find(
+                (s) => s.size === selectedSize
+            );
+
+            if (sizeData) {
+                return {
+                    price: sizeData.price,
+                    discountedPrice: sizeData.discountedPrice,
+                    stock: sizeData.stock,
+                };
+            }
+        }
+
+        return {
+            price: product.price,
+            discountedPrice: product.discountedPrice,
+            stock: product.countInStock,
+        };
     };
 
     const { price, discountedPrice, stock } = getCurrentPrice();
 
-    const handleAddToCart = () => {
-        if (product.availableColors?.length && !selectedColor) return alert("Please select a color");
-        if (product.availableSizes?.length && !selectedSize) return alert("Please select a size");
-        addToCart({
-            _id: product._id,
-            quantity,
-            selectedImage,
-            selectedOptions: { color: selectedColor || null, size: selectedSize || null },
-            price: discountedPrice || price
-        });
-        setNotification({ message: "Added to cart!", type: "success" });
-        setTimeout(() => setNotification({ message: "", type: "" }), 2000);
+    const handleAddToCart = async () => {
+        if (!token) {
+            return showNotification("Please login first", "error");
+        }
+
+        if (product?.availableColors?.length > 0 && !selectedColor) {
+            return showNotification("Select a color", "error");
+        }
+
+        if (product?.availableSizes?.length > 0 && !selectedSize) {
+            return showNotification("Select a size", "error");
+        }
+
+        try {
+            await addToCart({
+                _id: product._id,
+                quantity,
+                selectedImage,
+                selectedOptions: {
+                    color: selectedColor || null,
+                    size: selectedSize || null,
+                },
+                price: discountedPrice || price,
+            });
+
+            await getCart();
+
+            showNotification("Added to cart");
+        } catch (err) {
+            console.error(err);
+            showNotification("Failed to add cart", "error");
+        }
+    };
+
+    const submitReview = async () => {
+        if (!token) {
+            return showNotification("Please login first", "error");
+        }
+
+        if (!review.rating || !review.comment) {
+            return showNotification("Provide rating and comment", "error");
+        }
+
+        try {
+            const res = await fetch(`${API}/product/review/${id}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "auth-token": token,
+                },
+                body: JSON.stringify(review),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data.message);
+            }
+
+            setReview({
+                rating: 0,
+                comment: "",
+            });
+
+            fetchProduct();
+
+            showNotification("Review added");
+        } catch (err) {
+            console.error(err);
+            showNotification("Failed to add review", "error");
+        }
     };
 
     const placeOrder = async () => {
-        if (!product) return;
-        if (product.availableColors?.length && !selectedColor) return alert("Please select a color");
-        if (product.availableSizes?.length && !selectedSize) return alert("Please select a size");
-
-        const payload = {
-            productId: product._id,
-            quantity,
-            shippingAddress,
-            paymentMethod,
-            selectedImage,
-            selectedOptions: { color: selectedColor || null, size: selectedSize || null },
-            price: discountedPrice || price
-        };
-
-        try {
-            const res = await fetch("https://onlinehattid-production.up.railway.app/api/order/placeorder", {
-                method: "POST",
-                headers: { "Content-Type": "application/json", "auth-token": localStorage.getItem("token") },
-                body: JSON.stringify(payload),
-            });
-            const data = await res.json();
-            if (res.ok) {
-                if (paymentMethod === "Online") setSelectedOrderId(data.orderId);
-                else {
-                    setNotification({ message: "Order placed successfully!", type: "success" });
-                    setShowModal(false);
-                    getCart();
-                    getProduct();
-                }
-            } else setNotification({ message: data.message, type: "error" });
-        } catch {
-            setNotification({ message: "Server error", type: "error" });
+        if (!token) {
+            return showNotification("Please login first", "error");
         }
 
-        setTimeout(() => setNotification({ message: "", type: "" }), 3000);
+        try {
+            const payload = {
+                productId: product._id,
+                quantity,
+                shippingAddress,
+                paymentMethod: "COD",
+                selectedImage,
+                selectedOptions: {
+                    color: selectedColor || null,
+                    size: selectedSize || null,
+                },
+                price: discountedPrice || price,
+            };
+
+            const res = await fetch(`${API}/order/placeorder`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "auth-token": token,
+                },
+                body: JSON.stringify(payload),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data.message);
+            }
+
+            showNotification("Order placed successfully");
+
+            setShowModal(false);
+
+            getCart();
+            getProduct();
+        } catch (err) {
+            console.error(err);
+            showNotification("Failed to place order", "error");
+        }
     };
 
-    if (loading || !product) return (
-        <>
-            <Navbar />
-            <div className="pt-24"><Spinner /></div>
-        </>
-    );
+    if (loading || !product) {
+        return (
+            <>
+                <Navbar />
+                <div className="pt-24">
+                    <Spinner />
+                </div>
+            </>
+        );
+    }
 
     return (
         <>
