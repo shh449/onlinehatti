@@ -12,29 +12,32 @@ export const categories = [
 ];
 
 export const subcategories = {
-    clothes: ["tshirts", "hoodies", "jeans"],
-    "mens clothes": ["shirts", "pants"],
-    "kids clothes": ["baby suits", "school wear"],
+    clothes: ["shirt", "2 Piece suits", "3 Piece suits", "kurti", "stiched", "lehnega"],
+    "mens clothes": ["cotton", "silk", "karandi", "wash n wear", "wool", "boski", "khaddar", "mens orginal", "stiched", "shirts"],
+    "kids clothes": ["full dress", "girls kurta", "kids hoodies", "west", "bottoms", "kids formal wear"],
     shoes: ["sneakers", "formal", "slippers"],
     watches: ["smart watches", "luxury"],
-    "fashion bags": ["hand bags", "travel bags"],
-    kitchenware: ["plates", "cookware"],
-    "home decor": ["wall art", "lighting"],
-    "Electronic Accessories": ["chargers", "headphones"],
+    "fashion bags": ["clutches", "shoulder bags", "handbags", "purse"],
+    kitchenware: ["plates", "kitchen Accessories", "kitchen organizers", "kitchen appliances", "utensils", "cookware", "glasses & cups", "tray & dishes", "bottles"],
+    "home decor": ["wall clocks", "decoration", "wall decor", "artificial flowers & plants", "decor lights"],
+    "Electronic Accessories": ["chargers & cables", "headphones", "speakers", "mobile Accessories", "computer Accessories", "handsfree"],
 };
 
 export const colorOptions = [
-    "#FF0000",
-    "#00FF00",
-    "#0000FF",
-    "#FFFF00",
-    "#FFA500",
-    "#800080",
+    "Black",
+    "Blue",
+    "Pink",
+    "White",
+    "Red",
+    "Purple",
+    "Brown",
+    "Green",
+    "Yellow",
 ];
 
 export const sizeOptions = [
-    "XS", "S", "M", "L", "XL", "XXL",
+
     "6", "7", "8", "9", "10",
     "35", "36", "37", "38", "39", "40",
-    "1-2 years", "3-4 years", "5-6 years",
+    "1-2 years", "3-4 years", "5-6 years", "7-8 years", "9-10 years", "11-12 years",
 ];

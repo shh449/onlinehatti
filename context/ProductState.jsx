@@ -75,6 +75,11 @@ export default function ProductState(props) {
     // Cart APIs (UNCHANGED)
     //////////////////////////////////////////
     const addToCart = async (id, quantity = 1, selectedImage = "", selectedOptions = {}) => {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+            throw new Error("No token");
+        }
         try {
             const response = await fetch("https://onlinehattid-production.up.railway.app/api/cart/addcart", {
                 method: "POST",
