@@ -20,7 +20,7 @@ export const categoryFilters = {
     "fashion bags": ["clutches", "shoulder bags", "handbags", "purse"],
     kitchenware: ["plates", "kitchen Accessories", "kitchen organizers", "kitchen appliances", "utensils", "cookware", "glasses & cups", "tray & dishes", "bottles"],
     "home decor": ["wall clocks", "decoration", "wall decor", "artificial flowers & plants", "decor lights"],
-    "Electronic Accessories": ["chargers & cables", "headphones", "speakers", "mobile Accessories", "computer Accessories", "handsfree"],
+    "electronic accessories": ["chargers & cables", "headphones", "speakers", "mobile Accessories", "computer Accessories", "handsfree"],
     watches: ["smart",
         "analog",
         "luxury",]

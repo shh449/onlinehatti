@@ -55,7 +55,7 @@ export default function Navbar({
         "kids clothes",
         "kitchenware",
         "home decor",
-        "Electronic Accessories",
+        "electronic accessories",
     ];
 
     // ================= LOGOUT =================
@@ -382,7 +382,7 @@ export default function Navbar({
 
             {/* ================= MOBILE BOTTOM NAV ================= */}
 
-            <div className="lg:hidden fixed bottom-0 left-0 w-full z-50 px-3 pb-3">
+            <div className="lg:hidden fixed bottom-0 left-0 w-full z-50 px-3 pb-[max(12px,env(safe-area-inset-bottom))]">
 
                 <div className="bg-[#124b68]/80 backdrop-blur-2xl border border-white/10 shadow-2xl rounded-3xl px-2 py-3">
 

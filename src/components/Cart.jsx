@@ -362,15 +362,15 @@ export default function CartPage() {
             {notification.message && (
                 <div
                     className={`fixed top-20 right-4 px-4 py-2 rounded shadow-lg z-50 ${notification.type === "success"
-                            ? "bg-green-500 text-white"
-                            : "bg-red-500 text-white"
+                        ? "bg-green-500 text-white"
+                        : "bg-red-500 text-white"
                         }`}
                 >
                     {notification.message}
                 </div>
             )}
 
-            <div className="pt-28 px-4 sm:px-6 lg:px-12 flex flex-col lg:flex-row gap-6">
+            <div className="pt-28 pb-40 lg:pb-6 px-4 sm:px-6 lg:px-12 flex flex-col lg:flex-row gap-6">
                 {/* Cart Items */}
                 <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
                     {validCartItems.length === 0 ? (
@@ -454,11 +454,11 @@ export default function CartPage() {
                                                                     )
                                                                 }
                                                                 className={`w-7 h-7 rounded-full border-2 transition-all ${item
-                                                                        .selectedOptions
-                                                                        ?.color ===
-                                                                        color
-                                                                        ? "border-white scale-110"
-                                                                        : "border-gray-400"
+                                                                    .selectedOptions
+                                                                    ?.color ===
+                                                                    color
+                                                                    ? "border-white scale-110"
+                                                                    : "border-gray-400"
                                                                     }`}
                                                                 style={{
                                                                     backgroundColor:
@@ -500,11 +500,11 @@ export default function CartPage() {
                                                                     )
                                                                 }
                                                                 className={`min-w-[48px] px-3 py-2 text-sm rounded-lg border transition-all duration-200 font-semibold ${item
-                                                                        .selectedOptions
-                                                                        ?.size ===
-                                                                        size
-                                                                        ? "border-white bg-white/20 text-white"
-                                                                        : "border-gray-400 text-gray-200"
+                                                                    .selectedOptions
+                                                                    ?.size ===
+                                                                    size
+                                                                    ? "border-white bg-white/20 text-white"
+                                                                    : "border-gray-400 text-gray-200"
                                                                     }`}
                                                             >
                                                                 {
