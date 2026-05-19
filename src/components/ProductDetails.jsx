@@ -127,27 +127,24 @@ export default function ProductDetails() {
         }
 
         try {
-            await addToCart({
-                _id: product._id,
+            await addToCart(
+                product._id,
                 quantity,
                 selectedImage,
-                selectedOptions: {
+                {
                     color: selectedColor || null,
                     size: selectedSize || null,
-                },
-                price: discountedPrice || price,
-            });
-
-            await getCart();
+                }
+            );
 
             showNotification("Added to cart successfully");
+
         } catch (err) {
             console.error(err);
 
             showNotification("Failed to add to cart", "error");
         }
     };
-
     // SUBMIT REVIEW
     const submitReview = async () => {
         if (!localStorage.getItem("token")) {
@@ -310,8 +307,8 @@ export default function ProductDetails() {
             {notification.message && (
                 <div
                     className={`fixed top-4 right-4 px-4 py-2 rounded text-white z-50 shadow-lg ${notification.type === "success"
-                            ? "bg-green-500"
-                            : "bg-red-500"
+                        ? "bg-green-500"
+                        : "bg-red-500"
                         }`}
                 >
                     {notification.message}
@@ -339,8 +336,8 @@ export default function ProductDetails() {
                                             setSelectedImage(img)
                                         }
                                         className={`w-20 h-20 object-contain hover:object-cover rounded cursor-pointer border-2 ${selectedImage === img
-                                                ? "border-amber-500"
-                                                : "border-transparent"
+                                            ? "border-amber-500"
+                                            : "border-transparent"
                                             }`}
                                     />
                                 ))
@@ -368,8 +365,8 @@ export default function ProductDetails() {
                                                 setSelectedColor(color)
                                             }
                                             className={`w-8 h-8 rounded-full border-2 transition-all ${selectedColor === color
-                                                    ? "border-white scale-110"
-                                                    : "border-gray-500"
+                                                ? "border-white scale-110"
+                                                : "border-gray-500"
                                                 }`}
                                             style={{
                                                 backgroundColor: color,
@@ -396,8 +393,8 @@ export default function ProductDetails() {
                                                 setSelectedSize(size)
                                             }
                                             className={`w-full min-h-[42px] px-2 py-2 rounded-lg border-2 text-sm font-semibold transition-all overflow-hidden text-ellipsis whitespace-nowrap ${selectedSize === size
-                                                    ? "border-white bg-white/20"
-                                                    : "border-gray-500 bg-black/10"
+                                                ? "border-white bg-white/20"
+                                                : "border-gray-500 bg-black/10"
                                                 }`}
                                         >
                                             {size}
@@ -636,9 +633,9 @@ export default function ProductDetails() {
                                                     )
                                                 }
                                                 className={`w-8 h-8 rounded-full border-2 ${selectedColor ===
-                                                        color
-                                                        ? "border-white scale-110"
-                                                        : "border-gray-500"
+                                                    color
+                                                    ? "border-white scale-110"
+                                                    : "border-gray-500"
                                                     }`}
                                                 style={{
                                                     backgroundColor:
@@ -670,9 +667,9 @@ export default function ProductDetails() {
                                                     )
                                                 }
                                                 className={`w-full min-h-[42px] px-2 py-2 rounded-lg border-2 text-sm font-semibold transition-all overflow-hidden text-ellipsis whitespace-nowrap ${selectedSize ===
-                                                        size
-                                                        ? "border-white bg-white/20"
-                                                        : "border-gray-500 bg-black/10"
+                                                    size
+                                                    ? "border-white bg-white/20"
+                                                    : "border-gray-500 bg-black/10"
                                                     }`}
                                             >
                                                 {size}

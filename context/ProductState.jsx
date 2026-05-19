@@ -74,14 +74,16 @@ export default function ProductState(props) {
     //////////////////////////////////////////
     // Cart APIs (UNCHANGED)
     //////////////////////////////////////////
-    const addToCart = async (id, quantity = 1, selectedImage = "", selectedOptions = {}) => {
-        const token = localStorage.getItem("token");
+    const addToCart = async (
+        id,
+        quantity = 1,
+        selectedImage = "",
+        selectedOptions = {}
+    ) => {
 
-        if (!token) {
-            throw new Error("No token");
-        }
-        try {
-            const response = await fetch("https://onlinehattid-production.up.railway.app/api/cart/addcart", {
+        const response = await fetch(
+            "https://onlinehattid-production.up.railway.app/api/cart/addcart",
+            {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -93,13 +95,17 @@ export default function ProductState(props) {
                     selectedImage,
                     selectedOptions
                 }),
-            });
-            const json = await response.json();
-            if (json.cart) setCart(json.cart);
-            await getCart();
-        } catch (error) {
-            console.error("Error adding to cart:", error);
+            }
+        );
+
+        const json = await response.json();
+
+        if (json.cart) {
+            setCart(json.cart);
         }
+
+        // background refresh
+        getCart();
     };
 
     const getCart = async () => {
